@@ -34,11 +34,14 @@ def home():
     # # get info for each movie
     if error is None:
       movies, error = get_movie(movie=movie_name, apply_filter='NAME')
+      # print(movies)
       if error:
         # print('error: ', error)
         pass
       # print(movies)
-      return 'working'
+      # return 'working'
+      if len(movies) > 0:
+        return render_template('search/home.html', movies=movies)
     
-  return render_template('search/home.html')
+  return render_template('search/home.html', error=error)
 

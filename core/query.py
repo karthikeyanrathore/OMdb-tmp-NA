@@ -50,7 +50,28 @@ def authenticatePerson(uname, password):
     user_id = person[0].id
   return success, error, user_id
 
- 
+def insertPlaylist(person, playlist_name, private):
+  print(person, playlist_name, private)
+  if private is False:
+    private = False
+  else:
+    private = True
+  p = Playlist(str(playlist_name), private)
+  mea = person.playlists.append(p)
+  success = None
+  error = None
+  try:
+    # db.session.add(mea)
+    db.session.commit()
+    success = 'success'
+  except Exception as e:
+    error = e
+    db.session.rollback()
+    raise 
+  
+  return success, error 
+
+
 
 
 

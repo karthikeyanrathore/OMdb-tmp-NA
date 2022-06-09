@@ -28,7 +28,6 @@
 </nav>
 <br>
 <div class ="container">
-<h3> <mark>Hey! {{g.user.name}}</mark></h3>
 <br>
 {% if error %}
 <div class="alert alert-danger">
@@ -36,19 +35,12 @@
 </div>
 {% endif %}
 <form method="post"action="{{url_for('search.home')}}" >
-<div class="form-group w-100">
-<input name="movie_name" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" id="movie_name">
-</div>
-<div class="input-group">
-<input  class="btn btn-primary"  type="submit" value="SUBMIT">
-</div>
-<br>
-<h3><mark># View Movies</mark></h3>
-{% for movie in movies %}
 
-<h3>{{movie['title']}}
-<a class="text-danger" href="{{ url_for('playlist.add_to_playlist', user_id=g.user.id, movie_id=movie['imdbID']) }}">
-Add to Playlist</a></h3>
+<br>
+<h3><mark># Add Movie to Playlist</mark></h3>
+{% for playlist in playlists %}
+
+<h3>{{playlist.name}}</h3>
 {% endfor %}
 </div>
 </form>

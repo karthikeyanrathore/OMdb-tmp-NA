@@ -28,36 +28,51 @@
 </nav>
 <br>
 <div class ="container">
-<h3> <mark>Hey! {{g.user.name}}</mark></h3>
+
 <br>
+
+<h3><mark># Create Playlist</mark></h3>
 {% if error %}
 <div class="alert alert-danger">
 <strong>Error:</strong> {{ error }}
 </div>
 {% endif %}
-<form method="post"action="{{url_for('search.home')}}" >
+<form method="post"action="{{url_for('playlist.create')}}" >
 <div class="form-group w-100">
-<input name="movie_name" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" id="movie_name">
+<input name="playlist_name" class="form-control" id="playlist_name" placeholder="Enter playlist name">
+<small id="emailHelp" class="form-text text-muted">Enter UNIQUE playlist name.</small>
 </div>
-<div class="input-group">
-<input  class="btn btn-primary"  type="submit" value="SUBMIT">
+<div class="form-group form-check">
+<input type="checkbox" class="form-check-input" name="private" value="TRUE" id="private">
+<label class="form-check-label" for="private">private</label>
 </div>
-<br>
-<h3><mark># View Movies</mark></h3>
-{% for movie in movies %}
-
-<h3>{{movie['title']}}
-<a class="text-danger" href="{{ url_for('playlist.add_to_playlist', user_id=g.user.id, movie_id=movie['imdbID']) }}">
-Add to Playlist</a></h3>
-{% endfor %}
-</div>
+<button type="submit" class="btn btn-primary">Submit</button>
 </form>
+<hr style="width:100%", size="3", color=black>  
+
+<br>
+<h3><mark># View Playlist</mark></h3>
+
+{% for playlist in playlists %}
+
+{% if playlist.private == True %}
+<a class="text-danger" href="{{ url_for('playlist.view_private_playlist', user_id=g.user.id, playlist_id=playlist.id) }}">PRIVATE:  {{playlist.name}}</a>
+<br>
+{% endif %}
+
+{% if playlist.private == False %}
+<a class="text-primary" href="{{ url_for('playlist.view_public_playlist', user_id=g.user.id, playlist_id=playlist.id) }}">PUBLIC:  {{playlist.name}}</a>
+<br>
+{% endif %}
+
+
+{% endfor %}
 
 </div>
 <br>
 
-</div>
-<br>
+
+
 </div>
 </body>
 <style>

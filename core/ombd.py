@@ -5,16 +5,16 @@
 import requests
 
 from core.config import API_KEY
-
+'''
 movie_info = {
-'title': None,
-'year': None,
+'title': [],
+'year': [],
 'imdbID': None,
 'type': None,
 'poster_url': None,
 
 }
-
+'''
 
 
 def get_by_name(movie):
@@ -36,14 +36,17 @@ def get_by_name(movie):
     if data['Response'] == 'False':
       error = data['Error']
       return movies, error
+    # movie_info = {}
     for i in range (0, len(data['Search'])):
+      movie_info = {}
       movie_info['title'] = data['Search'][i]['Title']
       movie_info['year'] = data['Search'][i]['Year']
-      movie_info['imdbID'] = data['Search'][i]['imdbID']
+      movie_info['imdbID'] = str(data['Search'][i]['imdbID'])
       movie_info['type'] = data['Search'][i]['Type']
       movie_info['poster_url'] = data['Search'][i]['Poster']
       # print(movie_info)
       movies.append(movie_info)
+    print(movies)
     return movies, error
      
       

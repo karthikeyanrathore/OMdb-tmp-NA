@@ -6,6 +6,7 @@ from core.models import (Person, Playlist, Movie)
 from core.db import db
 from core.auth import auth_bp
 from core.search import search_bp
+from core.playlist import playlist_bp
 
 
 logger = logging.getLogger(f"FASAL_MAIN.{__name__}")
@@ -28,6 +29,7 @@ def create_app():
 
   app.register_blueprint(auth_bp, url_prefix="/auth")
   app.register_blueprint(search_bp, url_prefix="/search")
+  app.register_blueprint(playlist_bp, url_prefix="/playlist")
   print(app.url_map)
 
   return app

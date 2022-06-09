@@ -17,6 +17,12 @@ class Person(db.Model):
   def __repr__(self):
     return '<Person %r>' % self.name
 
+# https://stackoverflow.com/questions/25668092/flask-sqlalchemy-many-to-many-insert-data
+association_table = db.Table('association', db.Model.metadata,
+  db.Column('playlist_id', db.Integer, db.ForeignKey('playlist.id')),
+  db.Column('movie_id', db.Integer, db.ForeignKey('movie.id'))
+)
+
 class Playlist(db.Model):
 
   __tablename__ = "playlist"
@@ -25,7 +31,8 @@ class Playlist(db.Model):
   name = db.Column(db.String(50), unique=True, nullable=False)
   private = db.Column(db.Boolean, default=False, nullable=False)
   person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
-  movies = db.relationship('Movie', backref='playlist', lazy="dynamic")
+  # movies = db.relationship('Movie', backref='playlist', lazy="dynamic")
+  movies = db.relationship("Movie", secondary=association_table)
   
   def __init__(self, name, private):
     self.name = name
@@ -44,7 +51,7 @@ class Movie(db.Model):
 
   # https://stackoverflow.com/questions/25375179/one-to-many-flask-sqlalchemy
   # https://github.com/karthikeyanrathore/learning/blob/main/book/main.py
-  playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))
+  # playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'))
   
   def __init__(self, omdb_id):
     self.omdb_id = omdb_id
