@@ -6,3 +6,6 @@ SQLALCHEMY_DATABASE_URI="sqlite:///pp.sqlite3"
 
 CURRENT_VERSION_API="v1"
 
+SECRET_KEY=os.environ['SECRET_KEY']
+
+API_KEY=os.environ['API_KEY']

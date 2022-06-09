@@ -1,0 +1,34 @@
+>>> from core.models import Person, Movie, Playlist
+>>> from core.db import db
+>>> me = Person('admin','admin')
+>>> p = Playlist('rap', True)
+>>> me.playlists.append(p)
+>>> m = Movie('ew3c')
+>>> p.movies.append(m)
+>>> db.session.add(me)
+>>> db.session.commit()
+>>> x = Person.query.first()
+>>> x.name
+'admin'
+>>> x.playlists
+[<Playlist 1>]
+>>> x.playlists[0]
+<Playlist 1>
+>>> x.playlists[0].private
+True
+>>> x.playlists[0].name
+'rap'
+>>> x.playlists[0].movies
+<sqlalchemy.orm.dynamic.AppenderBaseQuery object at 0x110478d30>
+>>> x.playlists[0].person_id
+1
+>>> x.playlists[0].movies
+<sqlalchemy.orm.dynamic.AppenderBaseQuery object at 0x110478700>
+>>> x.playlists[0].movies[0]
+<Movie 1>
+>>> x.playlists[0].movies[0].ombd_id
+Traceback (most recent call last):
+File "<console>", line 1, in <module>
+AttributeError: 'Movie' object has no attribute 'ombd_id'
+>>> x.playlists[0].movies[0].omdb_id
+

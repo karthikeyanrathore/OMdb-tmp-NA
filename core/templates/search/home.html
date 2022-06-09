@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container-fluid">
+<a class="navbar-brand" href="{{url_for('search.home')}}">fasal-tmp</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="nav-link" href="#">playlist</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{{url_for('auth.logout')}}">logout</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://github.com/karthikeyanrathore/-tmp">github</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<br>
+<div class ="container">
+<h3> <mark>Hey! {{g.user.name}}</mark></h3>
+<br>
+
+<form method="post"action="{{url_for('search.home')}}" >
+<div class="form-group w-100">
+<input name="movie_name" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" id="movie_name">
+</div>
+<div class="input-group">
+<input  class="btn btn-primary"  type="submit" value="SUBMIT">
+</div>
+</div>
+</form>
+</div>
+<br>
+</div>
+</body>
+<style>
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: #F0F0F0;
+color: black;
+text-align: center;
+}
+</style>
+
+<div class="footer">
+<p><strong><u>Author: Karthikeyan rathore</u></strong></p>
+</div>
+
+</html>
+
