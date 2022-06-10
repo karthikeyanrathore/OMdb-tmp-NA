@@ -20,14 +20,17 @@ movie_info = {
 
 def get_by_name(movie):
   params = (('s', movie), ('apikey', API_KEY))
-  response = requests.get(API, params=params)  
+  try:
+    response = requests.get(API, params=params)  
+  except Exception as e:
+    error = f"API is not Working {e}"
   error = None
   
   if response.status_code == 200:
     # replace logger
     print('API is working')
   else:
-    error = f"API is not Working {API_KEY, API, movie}"
+    error = f"API is not Working {response.status_code }"
     # print(error)
   
   movies = []
