@@ -75,6 +75,7 @@ def get_movie(movie, apply_filter):
   # get by name
   if apply_filter == 'NAME':
     movies, error = get_by_name(movie)
+    print(movies)
     if movies is None:
       error = "movies empty"
       return movies, error
