@@ -48,7 +48,7 @@ def get_by_name(movie):
       movies.append(movie_info)
     print(movies)
     return movies, error
-     
+  return movies, error 
 
 def get_by_id(movie_id):
   params = (('i', movie_id), ('apikey', API_KEY))
@@ -87,4 +87,4 @@ def get_movie(movie, apply_filter):
     return movie
   # invalid filter
   else:
-    pass
+    return "error in get_movie()"
