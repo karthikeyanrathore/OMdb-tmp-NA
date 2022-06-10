@@ -27,7 +27,7 @@ def get_by_name(movie):
     # replace logger
     print('API is working')
   else:
-    error = "API is not Working"
+    error = f"API is not Working {response.status_code}"
     # print(error)
   
   movies = []
