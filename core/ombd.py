@@ -19,7 +19,7 @@ movie_info = {
 
 
 def get_by_name(movie):
-  params = (('s', movie), ('apikey', API_KEY))
+  params = (('s', str(movie)), ('apikey', str(API_KEY)))
   error = None
   try:
     response = requests.get(API, params=params)  
