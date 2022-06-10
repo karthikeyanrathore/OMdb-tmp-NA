@@ -37,7 +37,7 @@ def home():
       # print(movies)
       if error:
         # print('error: ', error)
-        pass
+        return redirect(url_for('search.home'))
       # print(movies)
       # return 'working'
       if len(movies) > 0:
