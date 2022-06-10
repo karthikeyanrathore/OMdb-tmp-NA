@@ -8,4 +8,5 @@ CURRENT_VERSION_API="v1"
 
 SECRET_KEY=os.environ['SECRET_KEY']
 
+API='https://www.omdbapi.com/'
 API_KEY=os.environ['API_KEY']

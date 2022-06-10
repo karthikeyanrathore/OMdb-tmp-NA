@@ -51,6 +51,17 @@ def authenticatePerson(uname, password):
   return success, error, user_id
 
 def insertPlaylist(person, playlist_name, private):
+  # check before inserting
+  # check if playlist exists or not for the person/user
+  success = None
+  error = None
+  check_person = Person.query.filter_by(id=person.id).first() 
+  check_playlists = check_person.playlists
+  for playlist in check_playlists:
+    if playlist.name == playlist_name:
+      error = 'playlist already exists'
+      return success, error
+
   print(person, playlist_name, private)
   if private is False:
     private = False
@@ -58,8 +69,6 @@ def insertPlaylist(person, playlist_name, private):
     private = True
   p = Playlist(str(playlist_name), private)
   mea = person.playlists.append(p)
-  success = None
-  error = None
   try:
     # db.session.add(mea)
     db.session.commit()
@@ -70,6 +79,32 @@ def insertPlaylist(person, playlist_name, private):
     raise 
   
   return success, error 
+
+def insert_Movie_to_playlist(playlist, movie_id):
+  success = None
+  error = None
+  # before insert check if omdb_id is already present or not
+  playlist =  (Playlist.query.filter_by(id=playlist.id).first())
+  movies = list(playlist.movies)
+  
+  print("MOVIES", movies)
+  for movie in movies:
+    if movie.omdb_id == movie_id:
+      error = 'Movie already exists in Playlist'
+      return success, error
+
+  m = Movie(movie_id)
+  playlist.movies.append(m)
+  try:
+    print('DONE')
+    db.session.commit()
+    success = 'success'
+  except Exception as e:
+    error = e
+    db.session.rollback()
+    raise
+
+  return  success, error
 
 
 

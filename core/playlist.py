@@ -5,8 +5,9 @@ import logging
 
 from core.db import db
 from core.auth import login_required
-from core.query import insertPlaylist
+from core.query import insertPlaylist, insert_Movie_to_playlist
 from core.models import Playlist
+from core.ombd import get_movie
 
 
 logger = logging.getLogger(f"PLAYLIST_HOME .{__name__}")
@@ -24,6 +25,7 @@ def home():
 @login_required
 def create():
   error = None
+  playlists = Playlist.query.filter_by(person_id=g.user.id).order_by(Playlist.private == False).all()
   if request.method == 'POST':
     playlist_name = request.form['playlist_name']
     private = False
@@ -47,21 +49,43 @@ def create():
         return redirect(url_for('playlist.home'))
         pass
       if error:
-        error = "ERROR in creating playlist"
-  return render_template('playlist/home.html', error=error)
+        render_template('playlist/home.html', error=error, playlists=playlists)
+  return render_template('playlist/home.html', playlists=playlists, error=error)
   
 
+# show movies of PRIVATE PLAYLIST
 @playlist_bp.route('/<int:user_id>/private/view/<int:playlist_id>', methods=['GET', 'POST'])
 @login_required
 def view_private_playlist(user_id, playlist_id):
   
-  return f'PRIVATE PLAYLIST ID, {playlist_id}'
+  #return f'PRIVATE PLAYLIST ID, {playlist_id}'
+  playlist = Playlist.query.filter_by(person_id=user_id, id=playlist_id).first()
+  # print(playlist.movies)
+  movies = list(playlist.movies)
+  # print(movies)
+  movies_arr = []
+  for movie in movies:
+    print("MOVIE ID: ", movie.omdb_id)
+    movie = get_movie(movie=movie.omdb_id, apply_filter='ID')
+    movies_arr.append(movie)
+  return render_template('playlist/private.html', playlist=playlist, movies_arr=movies_arr)
  
 
-@playlist_bp.route('/<int:user_id>/public/view/<int:playlist_id>', methods=['GET', 'POST'])
+# show movies of PUBLIC PLAYLIST
+@playlist_bp.route('/<int:user_id>/public/view/<int:playlist_id>')
 def view_public_playlist(user_id, playlist_id):
   
-  return f'PUBLIC PLAYLIST ID, {playlist_id}'
+  # return f'PUBLIC PLAYLIST ID, {playlist_id}'
+  playlist = Playlist.query.filter_by(person_id=user_id, id=playlist_id).first()
+  # print(playlist.movies)
+  movies = list(playlist.movies)
+  # print(movies)
+  movies_arr = []
+  for movie in movies:
+    print("MOVIE ID: ", movie.omdb_id)
+    movie = get_movie(movie=movie.omdb_id, apply_filter='ID')
+    movies_arr.append(movie)
+  return render_template('playlist/public.html', playlist=playlist, movies_arr=movies_arr)
   
 @playlist_bp.route('<int:user_id>/add/movie/<string:movie_id>', methods=['GET', 'POST'])
 @login_required
@@ -69,6 +93,21 @@ def add_to_playlist(user_id, movie_id):
   # return f'MOVIE ID, {movie_id}'
   # error = None
   # if request.method == 'POST':
+  movie_name = None
   playlists = Playlist.query.filter_by(person_id=g.user.id).order_by(Playlist.private == False).all()
-  return render_template('playlist/add.html', playlists=playlists)
-    
+  
+  if request.method == 'POST':
+    for playlist in playlists:
+      # print(len(request.form.getlist(playlist.name)))
+      success = None
+      error = None
+      if len(request.form.getlist(playlist.name)) > 0:
+        success, error = insert_Movie_to_playlist(playlist, movie_id)
+        print("SUCESS: ", success)
+        print("ERROR: ", error)
+        if error ==  "Movie already exists in Playlist":
+          return render_template('playlist/add.html', playlists=playlists, movie_name=movie_name,error=error)
+    return redirect(url_for('search.home'))
+ 
+  return render_template('playlist/add.html', playlists=playlists, movie_name=movie_name)
+ 

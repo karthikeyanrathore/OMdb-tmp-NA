@@ -5,6 +5,7 @@
 import requests
 
 from core.config import API_KEY
+from core.config import API
 '''
 movie_info = {
 'title': [],
@@ -18,7 +19,6 @@ movie_info = {
 
 
 def get_by_name(movie):
-  API = 'https://www.omdbapi.com/'
   params = (('s', movie), ('apikey', API_KEY))
   response = requests.get(API, params=params)  
   error = None
@@ -49,17 +49,38 @@ def get_by_name(movie):
     print(movies)
     return movies, error
      
-      
+
+def get_by_id(movie_id):
+  params = (('i', movie_id), ('apikey', API_KEY))
+  response = requests.get(API, params=params)  
+  error = None
+  if response.status_code == 200:
+    # replace logger
+    print('API is working')
+  else:
+    error = "API is not Working"
+    # print(error)
+  movie = {}
+  if error is None:
+    data = response.json()
+    if data['Response'] == 'False':
+      error = data['Error']
+      return movie, error
+    
+    # make it into own dict.
+    movie = data
+    return movie, error
 
 def get_movie(movie, apply_filter):
   # get by name
   if apply_filter == 'NAME':
-    movies = get_by_name(movie)
-    return movies
+    movies, error = get_by_name(movie)
+    return movies, error
   
   # get by id
   elif apply_filter == 'ID':
-    pass
+    movie = get_by_id(movie)
+    return movie
   # invalid filter
   else:
     pass

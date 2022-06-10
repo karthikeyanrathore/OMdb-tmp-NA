@@ -29,36 +29,11 @@
 <br>
 <div class ="container">
 <br>
-{% if error %}
-<div class="alert alert-danger">
-<strong>Error:</strong> {{ error }}
-</div>
-{% endif %}
-<form method="post">
+<h3><mark># View Movies in PUBLIC: {{playlist.name}} playlist</mark></h3>
+{% for movie in movies_arr %}
 
-<br>
-<h3><mark># Add Movie {{movie_name}} to Playlist</mark></h3>
-{% for playlist in playlists %}
-<br>
-{% if playlist.private == True %}
-<div class="double">
-<input class="form-check-input" type="checkbox" name={{playlist.name}} value='TRUE' id={{playlist.name}}>
-<label class="text-danger" for={{playlist.name}}>PRIVATE: {{playlist.name}}</label>
-</div>
-{% endif %}
-
-{% if playlist.private == False %}
-<div class="double">
-<input class="form-check-input" type="checkbox" name={{playlist.name}} value='TRUE' id={{playlist.name}}>
-<label class="text-primary" for={{playlist.name}}> PUBLIC: {{playlist.name}}</label>
-</div>
-{% endif %}
+<h3>{{movie[0]['Title']}}</h3>
 {% endfor %}
-<br>
-<button type="submit" class="btn btn-primary">Submit</button>
-
-</div>
-</form>
 
 </div>
 <br>
@@ -68,19 +43,6 @@
 </div>
 </body>
 <style>
-.double {
-  zoom: 1;
-  transform: scale(2);
-  -ms-transform: scale(2);
-  -webkit-transform: scale(2);
-  -o-transform: scale(2);
-  -moz-transform: scale(2);
-  transform-origin: 0 0;
-  -ms-transform-origin: 0 0;
-  -webkit-transform-origin: 0 0;
-  -o-transform-origin: 0 0;
-  -moz-transform-origin: 0 0;
-}
 .footer {
 position: fixed;
 left: 0;
