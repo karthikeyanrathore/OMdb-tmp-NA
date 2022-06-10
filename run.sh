@@ -12,4 +12,4 @@ echo "API KEY "$API_KEY
 export FLASK_APP=core.app:create_app
 # export FLASK_ENV=developement
 # export FLASK_DEBUG=1
-flask run
+flask run --host "0.0.0.0"
