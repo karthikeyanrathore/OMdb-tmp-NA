@@ -37,7 +37,7 @@ def home():
       # print(movies)
       if error:
         # print('error: ', error)
-        return redirect(url_for('search.home'))
+        return render_template('search/home.html', error=error)
       # print(movies)
       # return 'working'
       if len(movies) > 0:
