@@ -10,6 +10,6 @@ export $(grep -v '^#' .env | xargs)
 echo "API KEY "$API_KEY
 
 export FLASK_APP=core.app:create_app
-export FLASK_ENV=developement
-export FLASK_DEBUG=1
+# export FLASK_ENV=developement
+# export FLASK_DEBUG=1
 flask run
