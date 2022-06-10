@@ -33,3 +33,8 @@ File "<console>", line 1, in <module>
 AttributeError: 'Movie' object has no attribute 'ombd_id'
 >>> x.playlists[0].movies[0].omdb_id
 
+
+## set env var heroku  (DO IT MANUALLY)
+- https://devcenter.heroku.com/articles/config-vars 
+- heroku config:set SECRET_KEY="" -a fasal-docker
+
