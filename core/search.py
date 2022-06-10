@@ -34,6 +34,8 @@ def home():
     # # get info for each movie
     if error is None:
       movies, error = get_movie(movie=movie_name, apply_filter='NAME')
+      if movies is None:
+        return "ok"
       # print(movies)
       if error:
         # print('error: ', error)
