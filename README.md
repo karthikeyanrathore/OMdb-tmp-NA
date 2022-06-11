@@ -1,5 +1,13 @@
 ## OMdb-API (fasal work)
 
+### set env variable
+```
+cat > .env
+SECRET_KEY="" # openssl rand -base64 32
+API_KEY="" # https://www.omdbapi.com/apikey.aspx
+FLASK_ENV=developement
+FLASK_DEBUG=1
+```
 
 ### docker run
 ```
