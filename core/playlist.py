@@ -5,7 +5,7 @@ import logging
 
 from core.db import db
 from core.auth import login_required
-from core.query import insertPlaylist, insert_Movie_to_playlist
+from core.query import insertPlaylist, insert_Movie_to_playlist, valid_playlist
 from core.models import Playlist
 from core.ombd import get_movie
 
@@ -93,19 +93,35 @@ def add_to_playlist(user_id, movie_id):
   # return f'MOVIE ID, {movie_id}'
   # error = None
   # if request.method == 'POST':
-  movie_name = None
+  movies = get_movie(movie=movie_id, apply_filter='ID')
+  movie_name = movies[0]['Title']
+  print("MOVIE NAME", movie_name)
   playlists = Playlist.query.filter_by(person_id=g.user.id).order_by(Playlist.private == False).all()
   
   if request.method == 'POST':
+    already_exists_playlist = []
+    for playlist in playlists:
+      success = None
+      error = None
+       # check if playlists.selected is valid or not
+      if len(request.form.getlist(playlist.name)) > 0:
+        success, error = valid_playlist(playlist, movie_id)
+        if error ==  "Movie already exists in Playlist":
+          already_exists_playlist.append(playlist.name)
+    if len(already_exists_playlist) > 0:
+      return render_template('playlist/add.html', playlists=playlists, movie_name=movie_name,
+                                                          error=f"Movies already exists in Playlist {already_exists_playlist}")
+        
     for playlist in playlists:
       # print(len(request.form.getlist(playlist.name)))
       success = None
-      error = None
+      error = None     
       if len(request.form.getlist(playlist.name)) > 0:
         success, error = insert_Movie_to_playlist(playlist, movie_id)
         print("SUCESS: ", success)
         print("ERROR: ", error)
         if error ==  "Movie already exists in Playlist":
+          error = f"Movie already exists in Playlist '{playlist.name}'"
           return render_template('playlist/add.html', playlists=playlists, movie_name=movie_name,error=error)
     return redirect(url_for('search.home'))
  

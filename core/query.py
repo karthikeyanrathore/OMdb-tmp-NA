@@ -87,7 +87,7 @@ def insert_Movie_to_playlist(playlist, movie_id):
   playlist =  (Playlist.query.filter_by(id=playlist.id).first())
   movies = list(playlist.movies)
   
-  print("MOVIES", movies)
+  # print("MOVIES", movies)
   for movie in movies:
     if movie.omdb_id == movie_id:
       error = 'Movie already exists in Playlist'
@@ -106,8 +106,19 @@ def insert_Movie_to_playlist(playlist, movie_id):
 
   return  success, error
 
-
-
+def valid_playlist(playlist, movie_id):
+  success = None
+  error = None
+  # before insert check if omdb_id is already present or not
+  playlist =  (Playlist.query.filter_by(id=playlist.id).first())
+  movies = list(playlist.movies)
+  
+  # print("MOVIES", movies)
+  for movie in movies:
+    if movie.omdb_id == movie_id:
+      error = 'Movie already exists in Playlist'
+      return success, error
+  return success, error
 
 
 

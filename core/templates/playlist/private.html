@@ -31,9 +31,20 @@
 <br>
 <h3><mark># View Movies in PRIVATE: {{playlist.name}} playlist</mark></h3>
 {% for movie in movies_arr %}
+<br>
+<div class="row g-0 bg-light position-relative">
+<img src={{movie[0]['Poster']}} style="width: 120px;" alt="...">
+<div class="col-md-6 p-4 ps-md-0">
+<h5 class="mt-0">{{movie[0]['Title']}}</h5>
+<span class="badge bg-primary text-white">{{movie[0]['Genre']}}</span>
+<span class="badge rounded-pill bg-success text-white">{{movie[0]['Year']}}</span>
 
-<h3>{{movie[0]['Title']}}</h3>
-{% endfor %}
+<br>
+<p>{{movie[0]['Plot']}}</p>
+<span class="badge bg-warning text-white">imdbRating:{{movie[0]['imdbRating']}}</span>
+</div>
+</div>
+{% endfor %} 
 
 </div>
 <br>

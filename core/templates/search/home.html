@@ -40,18 +40,30 @@
 <input name="movie_name" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" id="movie_name">
 </div>
 <div class="input-group">
-<input  class="btn btn-primary"  type="submit" value="SUBMIT">
+<input  class="btn btn-primary"  type="submit" value="Submit">
 </div>
 <br>
 <h3><mark># View Movies</mark></h3>
 {% for movie in movies %}
-
-<h3>{{movie['title']}}
-<a class="text-danger" href="{{ url_for('playlist.add_to_playlist', user_id=g.user.id, movie_id=movie['imdbID']) }}">
+<br>
+<div class="row g-0 bg-light position-relative">
+<img src={{movie['poster_url']}} style="width: 120px;" alt="...">
+<div class="col-md-6 p-4 ps-md-0">
+<h5 class="mt-0">{{movie['title']}}</h5>
+<span class="badge bg-primary text-white">{{movie['type']}}</span>
+<span class="badge rounded-pill bg-success text-white">{{movie['year']}}</span>
+<br>
+<a class="stretched-link" href="{{ url_for('playlist.add_to_playlist', user_id=g.user.id, movie_id=movie['imdbID']) }}">
 Add to Playlist</a></h3>
-{% endfor %}
 </div>
+</div>
+{% endfor %}  
+
+</div>
+
+
 </form>
+
 
 </div>
 <br>

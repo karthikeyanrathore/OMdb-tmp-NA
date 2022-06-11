@@ -37,26 +37,28 @@
 <form method="post">
 
 <br>
-<h3><mark># Add Movie {{movie_name}} to Playlist</mark></h3>
+<h3><mark># Add Movie "{{movie_name}}" to Playlist</mark></h3>
+<div class="form-check">
+<div>
 {% for playlist in playlists %}
 <br>
 {% if playlist.private == True %}
-<div class="double">
+<label class="form-check-label" for="flexCheckDefault" style="padding:10px;">
 <input class="form-check-input" type="checkbox" name={{playlist.name}} value='TRUE' id={{playlist.name}}>
-<label class="text-danger" for={{playlist.name}}>PRIVATE: {{playlist.name}}</label>
-</div>
+<h4 class="text-danger"><small class="text-muted">PRIVATE: </small>{{playlist.name}}</h4>
+</label>
 {% endif %}
 
 {% if playlist.private == False %}
-<div class="double">
+<label class="form-check-label" for="flexCheckDefault" style="padding:10px;">
 <input class="form-check-input" type="checkbox" name={{playlist.name}} value='TRUE' id={{playlist.name}}>
-<label class="text-primary" for={{playlist.name}}> PUBLIC: {{playlist.name}}</label>
-</div>
+<h4 class="text-primary"><small class="text-muted">PUBLIC: </small>{{playlist.name}}</h4>
+</label>
 {% endif %}
 {% endfor %}
+</div>
 <br>
 <button type="submit" class="btn btn-primary">Submit</button>
-
 </div>
 </form>
 
@@ -69,16 +71,16 @@
 </body>
 <style>
 .double {
-  zoom: 1;
-  transform: scale(2);
-  -ms-transform: scale(2);
-  -webkit-transform: scale(2);
-  -o-transform: scale(2);
-  -moz-transform: scale(2);
+  zoom: -9;
+  transform: scale(0);
+  -ms-transform: scale(0);
+  -webkit-transform: scale(1.5);
+  -o-transform: scale(1);
+  -moz-transform: scale(1);
   transform-origin: 0 0;
   -ms-transform-origin: 0 0;
   -webkit-transform-origin: 0 0;
-  -o-transform-origin: 0 0;
+  -o-transform-origin: 1 0;
   -moz-transform-origin: 0 0;
 }
 .footer {
@@ -91,6 +93,7 @@ color: black;
 text-align: center;
 }
 </style>
+
 
 <div class="footer">
 <p><strong><u>Author: Karthikeyan rathore</u></strong></p>
