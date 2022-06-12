@@ -1,8 +1,13 @@
 #!/bin/bash
 # gunicorn --workers=2 'core.app:create_app()'
+
+if [ ! -d instance ]; then
+  mkdir instance
+fi
+
 if [[ $DB == 1 ]]; then
   echo "initialize DB"
-  rm core/pp.sqlite3
+  rm instance/production.sqlite3
 fi
 
 # import env var from .env
