@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 
-DATBASE= os.path.join('../instance', 'production.sqlite3')
+DATABASE= os.path.join('../instance', 'production.sqlite3')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DATABASE}' 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
