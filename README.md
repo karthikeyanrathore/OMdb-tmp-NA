@@ -1,4 +1,4 @@
-## OMdb-API (fasal work)
+## OMdb-API 
 
 ### set env variable
 ```
